@@ -29,19 +29,26 @@ incorrect5 = [ [1, 1.5],
 
 # Define a function check_sudoku() here:
 def check_sudoku(square):
+    # Find the size of the square
     n = len(square)
+    # Check rows
     for key in square:
+        # Return false if using a type other than int (string or double)
         if(type(key[0]) is not int):
             return False
+        # Return false if negative or zero
         if(key[0] < 1):
             return False
+        # Return false if out of bounds
         if(max(key) > n):
             return False
+        # Return false if duplicates
         times = (Counter(key))
         for item in times: 
             if(times[item] > 1):
                 return False
     
+    # Check columns
     i = 0
     while(i < len(square)):
         column = []
@@ -56,6 +63,26 @@ def check_sudoku(square):
                 return False
     return True
 
+# An example solution for the check_sudoku() function
+def check_sudoku_alternate_solution(square):
+    for row in square:
+        # Create a list with the integers 1, 2, ..., n.
+        # We will check that each number in the row is in the list
+        # and remove the numbers from the list once they are verified
+        # to ensure that each number only occurs once in the row.
+        check_list = list(range(1, len(square[0]) + 1))
+        for i in row:
+            if i not in check_list:
+                return False
+            check_list.remove(i)
+    for n in range(len(square[0])):
+        # Checking each column in the square
+        check_list = list(range(1, len(square[0]) + 1))
+        for row in square:
+            if row[n] not iin check_list:
+                return False
+            check_list.remove(row[n])
+    return True
 print(check_sudoku(incorrect))
 #>>> False
 
