@@ -24,8 +24,8 @@ def get_april_birthdays(people):
     # as values. See the test below for an example expected output.
     april_birthdays = {}
     for person in people:
-        if(person.birthday_month == "April"):
-            person.birthday()
+        if person.birthday_month == "April":
+            person.age += 1
             april_birthdays[person.name] = person.age
     return april_birthdays
 
@@ -37,11 +37,9 @@ def get_most_common_month(people):
     months = {'January':0, 'February':0, 'March':0, 'April':0, 'May':0, 
               'June':0, 'July':0, 'August':0, 'September':0, 'October':0,
               'November':0, 'December':0}
+              
     for person in people:
-        # print(person.birthday_month)
         months[person.birthday_month] += 1
-        # print(months[person.birthday_month])
-    # TODO: Modify the return statement.
     return max(months.items(), key=operator.itemgetter(1))[0]
 
 
