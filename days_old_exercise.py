@@ -1,3 +1,5 @@
+import time
+import _datetime
 # Given your birthday and the current date, calculate your age in days.
 # Compensate for leap days. Assume that the birthday and current date are
 # correct dates (and no time travel). Simply put, if you were born on
@@ -13,52 +15,28 @@ def isLeapYear(year):
         return False
 
 def daysBetweenDates(y1, m1, d1, y2, m2, d2):
-    # Days from years
-    leapYears = 0
-
-    if isLeapYear(y1):
-        leapYears += 1
-    if isLeapYear(y2):
-        leapYears += 1
-    # print("y1 leap? " + str(isLeapYear(y1)))
-    # print("y2 leap? " + str(isLeapYear(y2)))
-    years = (y2 - y1) 
-
-    # years = 0
-
-    print("years: " + str(years))
-    # print("before: " + str(leapYears))
-    leapYears += int(years / 4)
-    # print(int(years / 4))
-    # print("after: " + str(leapYears))
-    print("number of leap years: " + str(leapYears))
-    # yearDays = leapYears * 366 + (years - leapYears) * 365
-    yearDays = years * 365 + leapYears
-
-    # Days from months
-    m1Days = daysOfMonths[m1 - 1]
-    m2Days = daysOfMonths[m2 - 2]
-    # print("m1: " + str(m1) + " m2: " + str(m2)) 
-    slice = daysOfMonths[(m1 - 1) : (m2 - 1)]
-    # print("month days: " + str(sum(slice)))
-
+    s1 = _datetime.date(y1, m1, d1)
+    s2 = _datetime.date(y2, m2, d2)
+    u1 = time.mktime(_datetime.datetime.strptime(str(s1), "%Y-%m-%d").timetuple()) 
+    u2 = time.mktime(_datetime.datetime.strptime(str(s2), "%Y-%m-%d").timetuple()) 
+    if(u2 < u1):
+        print("Error. Date Two is before Date One")
     # Total days
-    days = yearDays + sum(slice) + (d2 - d1)
+    days = ((u2 - u1) / 86400)
     return days
 
 def testDaysBetweenDates():
-    
     # test same day
     assert(daysBetweenDates(2017, 12, 30,
                               2017, 12, 30) == 0)
+
     # test adjacent days
     assert(daysBetweenDates(2017, 12, 30, 
                               2017, 12, 31) == 1)
 
-
     # test new year
-    # assert(daysBetweenDates(2017, 12, 30, 
-    #                           2018, 1,  1)  == 2)
+    assert(daysBetweenDates(2017, 12, 30, 
+                              2018, 1,  1)  == 2)
 
 
     # test full year difference
@@ -68,5 +46,4 @@ def testDaysBetweenDates():
     print("Congratulations! Your daysBetweenDates")
     print("function is working correctly!")
     
-# testDaysBetweenDates()
-print(daysBetweenDates(2017, 12, 30, 2018, 1, 1))
+testDaysBetweenDates()
