@@ -9,10 +9,13 @@ import _datetime
 daysOfMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
 
 def isLeapYear(year): 
-    if(year % 4 == 0):
+    if year % 400 == 0:
         return True
-    else: 
-        return False
+    if year % 100 == 0:
+        return True
+    if year % 4 == 0:
+        return True        
+    return False
 
 def getDate(year, month, day):
     try:
