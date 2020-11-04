@@ -14,15 +14,45 @@ def isLeapYear(year):
     else: 
         return False
 
+def getDate(year, month, day):
+    try:
+        return _datetime.date(year, month, day)
+    except ValueError:
+        print("Oops! That is not a valid date. Please try again.")
+        return None   
+
 def daysBetweenDates(y1, m1, d1, y2, m2, d2):
-    s1 = _datetime.date(y1, m1, d1)
-    s2 = _datetime.date(y2, m2, d2)
-    u1 = time.mktime(_datetime.datetime.strptime(str(s1), "%Y-%m-%d").timetuple()) 
-    u2 = time.mktime(_datetime.datetime.strptime(str(s2), "%Y-%m-%d").timetuple()) 
+    date1 = getDate(y1, m1, d1)
+    date2 = getDate(y2, m2, d2)
+    u1 = time.mktime(_datetime.datetime.strptime(str(date1), "%Y-%m-%d").timetuple())
+    u2 = time.mktime(_datetime.datetime.strptime(str(date2), "%Y-%m-%d").timetuple()) 
     if(u2 < u1):
-        print("Error. Date Two is before Date One")
+        print("Error. Date Two is before Date One.")
+        return None
     # Total days
     days = ((u2 - u1) / 86400)
+    return days
+
+def nextDay(y, m, d):
+    if m == 2 and d == 28 and isLeapYear(y):
+            return getDate(y, m, 29)
+    elif d < daysOfMonths[m - 1]:
+        return getDate(y, m, d + 1)
+    else:
+        if m < 12:
+            return getDate(y, m + 1, 1)
+        else:
+            return getDate(y + 1, 1, 1)
+
+def daysBetweenDatesAlgorithm(y1, m1, d1, y2, m2, d2):
+    days = 0
+    d1 = getDate(y1, m1, d1)
+    d2 = getDate(y2, m2, d2)
+    if d2 < d1 :
+        return "Error. Date Two is before Date One. Please try again."
+    while d1 < d2:
+        d1 = nextDay(d1.year, d1.month, d1.day)
+        days += 1
     return days
 
 def testDaysBetweenDates():
@@ -46,4 +76,7 @@ def testDaysBetweenDates():
     print("Congratulations! Your daysBetweenDates")
     print("function is working correctly!")
     
-testDaysBetweenDates()
+# testDaysBetweenDates() 
+# print(daysBetweenDates(2012, 6, 29, 2012, 6, 30))
+# print(daysBetweenDatesAlgorithm(1912, 12, 12, 2012, 12, 12))
+print(daysBetweenDatesAlgorithm(2013, 1, 1, 2012, 12, 20))
