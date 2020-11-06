@@ -15,17 +15,43 @@ def create_linked_list(input_list):
     @param input_list: a list of integers
     @return: head node of the linked list
     """
-    if len(input_list) == 0:
-        return None
-    head = Node(input_list[0])
-    i = 1
-    current_node = head
-    while i < len(input_list):
-        current_node.next = Node(input_list[i])
-        i += 1
-        current_node = current_node.next
+    # if len(input_list) == 0:
+    #     return None
+    # head = Node(input_list[0])
+    # i = 1
+    # current_node = head
+    # while i < len(input_list):
+    #     current_node.next = Node(input_list[i])
+    #     i += 1
+    #     current_node = current_node.next
+    # return head
+    head = None
+    for value in input_list:
+        if head is None:
+            head = Node(value)    
+        else:
+        # Move to the tail (the last node)
+            current_node = head
+            while current_node.next:
+                current_node = current_node.next
+        
+            current_node.next = Node(value)
     return head
 
+def create_linked_list_better(input_list):
+    
+    head = None
+    tail = None
+
+    for value in input_list:
+
+        if head is None:
+            head = Node(value)
+            tail = head
+        else:
+            tail.next = Node(value)
+            tail = tail.next # update the tail
+    return head
 # head = Node(2)
 # head.next = Node(1)
 # head.next.next = Node(4)
@@ -53,13 +79,13 @@ def test_function(input_list, head):
         print("Fail: "  + e)
         
 input_list = [1, 2, 3, 4, 5, 6]
-head = create_linked_list(input_list)
+head = create_linked_list_better(input_list)
 test_function(input_list, head)
 
 input_list = [1]
-head = create_linked_list(input_list)
+head = create_linked_list_better(input_list)
 test_function(input_list, head)
 
 input_list = []
-head = create_linked_list(input_list)
+head = create_linked_list_better(input_list)
 test_function(input_list, head)
