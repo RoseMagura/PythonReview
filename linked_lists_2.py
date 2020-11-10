@@ -114,7 +114,15 @@ class LinkedList:
         else:
             self.append(value)
         
-
+        
+def reverse(linked_list):
+    reversed = LinkedList()
+    node = linked_list.head
+    while node:
+        # print(node.value)
+        reversed.prepend(node.value)
+        node = node.next
+    return reversed
 
 class DoubleNode:
     def __init__(self, value):
@@ -141,7 +149,20 @@ linked_list.append(3)
 linked_list.append(4)
 linked_list.append(3)
 linked_list.remove(1)
-assert linked_list.to_list() == [2, 1, 3, 4, 3], f"list contents: {linked_list.to_list()}"
+
+llist = LinkedList()
+for value in [4,2,5,1,-3,0]:
+    llist.append(value)
+
+flipped = reverse(llist)
+is_correct = list(flipped) == list([0,-3,1,5,2,4]) 
+# and list(llist) == list(reverse(flipped))
+print("Pass" if is_correct else "Fail")
+# print(flipped.to_list())
+
+# print(linked_list.to_list())
+# print(reverse(linked_list).to_list())
+# assert linked_list.to_list() == [2, 1, 3, 4, 3], f"list contents: {linked_list.to_list()}"
 # linked_list.remove(3)
 # assert linked_list.to_list() == [2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
 # linked_list.remove(3)
