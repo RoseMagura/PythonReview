@@ -273,7 +273,6 @@ nom_count_dict = {}
 # Add your code here
 for director_list in nominated.values():
     for director in director_list:
-        # print(director)
         nom_count_dict[director] = nom_count_dict.get(director, 0) + 1
     
 print('nom_count_dict = {}\n'.format(nom_count_dict))
@@ -283,5 +282,8 @@ print('nom_count_dict = {}\n'.format(nom_count_dict))
 win_count_dict = {}
 
 # Add your code here
+for year, winnerlist in winners.items():
+    for winner in winnerlist:
+        win_count_dict[winner] = win_count_dict.get(winner, 0) + 1
 
 print('win_count_dict = {}'.format(win_count_dict))
