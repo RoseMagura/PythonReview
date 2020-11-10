@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+import operator
 nominated = {
     1931: ['Norman Taurog', 'Wesley Ruggles', 'Clarence Brown',
            'Lewis Milestone', 'Josef Von Sternberg'],
@@ -275,7 +274,7 @@ for director_list in nominated.values():
     for director in director_list:
         nom_count_dict[director] = nom_count_dict.get(director, 0) + 1
     
-print('nom_count_dict = {}\n'.format(nom_count_dict))
+# print('nom_count_dict = {}\n'.format(nom_count_dict))
 
 ### 1B: Create dictionary with the count of Oscar wins for each director
 
@@ -286,4 +285,24 @@ for year, winnerlist in winners.items():
     for winner in winnerlist:
         win_count_dict[winner] = win_count_dict.get(winner, 0) + 1
 
-print('win_count_dict = {}'.format(win_count_dict))
+# print('win_count_dict = {}'.format(win_count_dict))
+
+most_win_director = []
+# most_win_director = max(winners.items(), key=operator.itemgetter(1))
+highest = 0
+for director, times in win_count_dict.items():
+    print(director, times)
+    if times > highest:
+        highest = times
+        most_win_director.clear()
+        most_win_director.append(director)
+    elif times == highest:
+        most_win_director.append(director)
+    else:
+        continue
+
+# Alternative solution
+# highest_count = max(win_count_dict.values())
+# most_win_director = [key for key, value in win_count_dict.items() 
+#     if value == highest_count]
+print(most_win_director)
