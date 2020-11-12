@@ -81,6 +81,18 @@ def merge(list1, list2):
 class NestedLinkedList(LinkedList):
     def flatten(self):
         # TODO: Implement this method to flatten the linked list in ascending sorted order.
+        return self._flatten(self.head)
+        
+        # Recursive function
+        def _flatten(self, node):
+
+            # A termination condition
+            if node.next is None:
+                return merge(node.value, None)
+            
+            # _flatten() is calling itself until a termination 
+            # condition is met
+            return merge(node.value, self._flatten(node.next))
         node = self.head
         if node is None:
             return None
